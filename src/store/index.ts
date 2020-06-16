@@ -3,6 +3,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import storage from 'redux-persist/lib/storage';
 import sceneReducer from './reducers/sceneReducer';
+import novelReducer from './reducers/novelReducer';
 
 declare global {
   interface Window {
@@ -12,11 +13,12 @@ declare global {
 
 const reducer = combineReducers({
   scene: sceneReducer,
+  novel: novelReducer,
 });
 
 const persistConfig = {
   key: 'visual-novel',
-  whitelist: ['chats'],
+  whitelist: ['novel'],
   storage,
 };
 
