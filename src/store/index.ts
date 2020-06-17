@@ -18,7 +18,7 @@ const reducer = combineReducers({
 
 const persistConfig = {
   key: 'visual-novel',
-  whitelist: ['novel'],
+  whitelist: [],
   storage,
 };
 

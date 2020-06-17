@@ -3,9 +3,14 @@ export type ButtonType = {
   redirectId: string;
 };
 
+export type TextsType = {
+  text: string;
+  updatedImage?: string;
+};
+
 export type SceneType = {
   image: string;
-  text: string;
+  texts: TextsType[];
   buttons: ButtonType[];
 };
 
