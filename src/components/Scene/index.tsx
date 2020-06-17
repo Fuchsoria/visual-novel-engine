@@ -10,6 +10,7 @@ export default function Scene({ scene, nextScene }: ScenePropsType) {
   const [isButtonsVisible, setButtonsVisible] = useState(false);
   const { image, text, buttons } = scene;
   const handleClick = (id: string) => () => {
+    clearScene();
     nextScene(id);
   };
 
@@ -24,29 +25,32 @@ export default function Scene({ scene, nextScene }: ScenePropsType) {
         clearInterval(wordsInterval);
         setButtonsVisible(true);
       }
-    }, 300);
+    }, 100);
   }, [text]);
+
+  const clearScene = () => {
+    setButtonsVisible(false);
+    clearInterval(wordsInterval);
+    wordsIntervalIndex = 0;
+    setWords([]);
+  };
 
   useEffect(() => {
     lazyWords();
-
-    return () => {
-      clearInterval(wordsInterval);
-      wordsIntervalIndex = 0;
-      setWords([]);
-      setButtonsVisible(false);
-    };
-  }, [lazyWords]);
+  }, [lazyWords, text]);
 
   return (
     <div className={styles.background} style={{ backgroundImage: `url(${image})` }}>
       <div className={styles.content}>
-        {isButtonsVisible && buttons.map((button) => (
-          <button key={`${button.text}${button.redirectId}`} onClick={handleClick(button.redirectId)}>
-            {button.text}
-          </button>
-        ))}
-        <p>{words.join(' ')}</p>
+        <div className={styles.buttons}>
+          {isButtonsVisible &&
+            buttons.map((button) => (
+              <button className={styles.button} key={`${button.text}${button.redirectId}`} onClick={handleClick(button.redirectId)}>
+                {button.text}
+              </button>
+            ))}
+        </div>
+        <p className={styles.text}>{words.join(' ')}</p>
       </div>
     </div>
   );

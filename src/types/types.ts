@@ -14,6 +14,13 @@ export type ScenePropsType = {
   nextScene: (id: string) => void;
 };
 
+export type SceneStateType = {
+  words: string[];
+  wordsInterval: number | null;
+  wordsIntervalIndex: number;
+  isButtonsVisible: boolean;
+};
+
 export type NovelType = {
   id: string;
   name: string;
