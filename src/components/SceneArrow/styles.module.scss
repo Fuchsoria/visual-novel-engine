@@ -1,0 +1,28 @@
+.arrow {
+  background-position: center center;
+  background-size: 50px 50px;
+  background-repeat: no-repeat;
+  background-color: #000000a6;
+  width: 100px;
+  height: auto;
+  border: none;
+  outline: none;
+}
+
+.prev {
+  background-image: url('../../assets/images/arrow-left.svg');
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.next {
+  background-image: url('../../assets/images/arrow.svg');
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

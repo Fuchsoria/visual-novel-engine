@@ -33,3 +33,21 @@ export type NovelType = {
 };
 
 export type NovelProps = { novel?: NovelType; scene?: SceneType; setScene: Function };
+
+export type SceneArrowProps = {
+  handleClick?: () => void;
+  direction?: 'left' | 'right';
+};
+
+export type SceneTextsProps = {
+  isLeftArrowActive: () => boolean;
+  isRightArrowActive: () => boolean;
+  words: string[];
+  prevText: () => void;
+  nextText: () => void;
+};
+
+export type SceneButtonProps = {
+  text: string;
+  handleClick: () => void;
+};

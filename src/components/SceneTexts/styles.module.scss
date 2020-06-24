@@ -1,0 +1,22 @@
+.texts {
+  width: 100%;
+  display: flex;
+  min-height: 75px;
+}
+
+.text {
+  width: 100%;
+  background: linear-gradient(to right, #000000a6 0%, #000000a6 10%, #000000a6 50%, #000000a6 90%, #000000a6 100%);
+  text-shadow: 1px 1px 4px #000000;
+  margin: 0;
+  padding: 20px 10vw;
+  font-size: 30px;
+  font-weight: 700;
+  color: white;
+}
+
+@media screen and (max-width: 1200px) {
+  .text {
+    background: #000000a6;
+  }
+}

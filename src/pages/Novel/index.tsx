@@ -15,8 +15,6 @@ class Novel extends Component<NovelProps> {
   };
 
   render() {
-    console.log(this.props);
-
     const { scene } = this.props;
 
     return scene && <Scene scene={scene} nextScene={this.nextScene} />;

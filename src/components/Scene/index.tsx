@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ScenePropsType } from '../../types/types';
+import SceneTexts from '../SceneTexts';
+import SceneButton from '../SceneButton';
 import styles from './styles.module.scss';
 
 let wordsInterval: number;
@@ -60,6 +62,14 @@ export default function Scene({ scene, nextScene }: ScenePropsType) {
     }
   };
 
+  const isLeftArrowActive = () => {
+    return textIndex > 0;
+  };
+
+  const isRightArrowActive = () => {
+    return textIndex < texts.length - 1;
+  };
+
   useEffect(() => {
     lazyWords();
 
@@ -74,20 +84,22 @@ export default function Scene({ scene, nextScene }: ScenePropsType) {
         <div className={styles.buttons}>
           {isButtonsVisible &&
             buttons.map((button) => (
-              <button
-                className={styles.button}
+              <SceneButton
                 key={`${button.text}${button.redirectId}`}
-                onClick={handleClick(button.redirectId)}
-              >
-                {button.text}
-              </button>
+                handleClick={handleClick(button.redirectId)}
+                text={button.text}
+              />
             ))}
         </div>
-        <div className={styles.texts}>
-          {texts?.length > 0 && textIndex > 0 && <button onClick={prevText} className={styles.prev} />}
-          <p className={styles.text}>{words.join(' ')}</p>
-          {texts?.length > 0 && textIndex < texts.length - 1 && <button onClick={nextText} className={styles.next} />}
-        </div>
+        {texts.length > 0 && (
+          <SceneTexts
+            isLeftArrowActive={isLeftArrowActive}
+            isRightArrowActive={isRightArrowActive}
+            words={words}
+            prevText={prevText}
+            nextText={nextText}
+          />
+        )}
       </div>
     </div>
   );
