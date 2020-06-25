@@ -4,6 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import storage from 'redux-persist/lib/storage';
 import sceneReducer from './reducers/sceneReducer';
 import novelReducer from './reducers/novelReducer';
+import settingsReducer from './reducers/settingsReducer';
 
 declare global {
   interface Window {
@@ -14,11 +15,12 @@ declare global {
 const reducer = combineReducers({
   scene: sceneReducer,
   novel: novelReducer,
+  settings: settingsReducer,
 });
 
 const persistConfig = {
   key: 'visual-novel',
-  whitelist: [],
+  whitelist: ['settings'],
   storage,
 };
 

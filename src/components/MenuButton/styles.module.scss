@@ -1,0 +1,17 @@
+.button {
+  padding: 5px 7px;
+  margin: 0 0 5px 0;
+  background-color: #000000a1;
+  color: white;
+  font-size: 14px;
+  font-family: 'Comic Neue', cursive;
+  font-weight: 500;
+  outline: none;
+  border: 0;
+  box-shadow: 0px 0px 2px #fff;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

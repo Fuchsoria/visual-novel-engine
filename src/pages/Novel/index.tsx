@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { NovelProps } from '../../types/types';
 import { NovelState, SceneState } from '../../store/reducers/reducersTypes';
 import Scene from '../../components/Scene';
-import { NovelProps } from '../../types/types';
 import { setScene } from '../../store/actions/sceneActions';
+import Menu from '../../components/Menu';
 
 class Novel extends Component<NovelProps> {
   nextScene = (id: string) => {
@@ -17,7 +18,12 @@ class Novel extends Component<NovelProps> {
   render() {
     const { scene } = this.props;
 
-    return scene && <Scene scene={scene} nextScene={this.nextScene} />;
+    return (
+      <>
+        <Menu />
+        {scene && <Scene scene={scene} nextScene={this.nextScene} />}
+      </>
+    );
   }
 }
 

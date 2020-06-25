@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { connect } from 'react-redux';
 import { ScenePropsType } from '../../types/types';
 import SceneTexts from '../SceneTexts';
 import SceneButton from '../SceneButton';
 import styles from './styles.module.scss';
+import { SettingsState } from '../../store/reducers/reducersTypes';
 
 let wordsInterval: number;
 let wordsIntervalIndex: number = 0;
 
-export default function Scene({ scene, nextScene }: ScenePropsType) {
+function Scene({ scene, nextScene, settings }: ScenePropsType) {
   const [words, setWords] = useState(['']);
   const [isButtonsVisible, setButtonsVisible] = useState(false);
   const [textIndex, setTextIndex] = useState(0);
@@ -18,22 +20,28 @@ export default function Scene({ scene, nextScene }: ScenePropsType) {
   };
 
   const lazyWords = useCallback(() => {
-    console.log(texts);
     const splitedText = texts[textIndex].text.split(' ');
-    console.log(splitedText);
 
-    wordsInterval = window.setInterval(() => {
-      setWords((words) => [...words, splitedText[wordsIntervalIndex]]);
-      wordsIntervalIndex++;
+    if (settings.lazyTexts) {
+      wordsInterval = window.setInterval(() => {
+        setWords((words) => [...words, splitedText[wordsIntervalIndex]]);
+        wordsIntervalIndex++;
 
-      if (wordsIntervalIndex >= splitedText.length) {
-        clearInterval(wordsInterval);
-        if (textIndex === texts.length - 1) {
-          setButtonsVisible(true);
+        if (wordsIntervalIndex >= splitedText.length) {
+          clearInterval(wordsInterval);
+          if (textIndex === texts.length - 1) {
+            setButtonsVisible(true);
+          }
         }
+      }, 100);
+    } else {
+      setWords(splitedText);
+
+      if (textIndex === texts.length - 1) {
+        setButtonsVisible(true);
       }
-    }, 100);
-  }, [texts, textIndex]);
+    }
+  }, [texts, textIndex, settings.lazyTexts]);
 
   const clearWords = () => {
     clearInterval(wordsInterval);
@@ -104,3 +112,11 @@ export default function Scene({ scene, nextScene }: ScenePropsType) {
     </div>
   );
 }
+
+const mapStateToProps = (state: { settings: SettingsState }) => {
+  return {
+    settings: state.settings,
+  };
+};
+
+export default connect(mapStateToProps)(Scene);

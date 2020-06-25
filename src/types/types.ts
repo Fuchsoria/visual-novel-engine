@@ -1,3 +1,5 @@
+import { SettingsState } from './../store/reducers/reducersTypes';
+
 export type ButtonType = {
   text: string;
   redirectId: string;
@@ -17,6 +19,7 @@ export type SceneType = {
 export type ScenePropsType = {
   scene: SceneType;
   nextScene: (id: string) => void;
+  settings: SettingsState;
 };
 
 export type SceneStateType = {
@@ -50,4 +53,11 @@ export type SceneTextsProps = {
 export type SceneButtonProps = {
   text: string;
   handleClick: () => void;
+};
+
+export type MenuState = { settings: SettingsState; setLazyTexts: () => void; unsetLazyTexts: () => void };
+
+export type MenuButtonProps = {
+  handleClick: () => void;
+  text: string;
 };

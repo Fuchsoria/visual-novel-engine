@@ -20,3 +20,9 @@ export type NovelState = {
 export type NovelPayload = {
   novel: NovelType;
 };
+
+export type SettingsState = {
+  lazyTexts: boolean;
+};
+
+export type SettingsPayload = {};
