@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { ScenePropsType } from '../../types/types';
 import SceneTexts from '../SceneTexts';
 import SceneButton from '../SceneButton';
-import styles from './styles.module.scss';
 import { SettingsState } from '../../store/reducers/reducersTypes';
+import { addSave } from '../../store/actions/savesActions';
+import styles from './styles.module.scss';
 
 let wordsInterval: number;
 let wordsIntervalIndex: number = 0;
 
-function Scene({ scene, nextScene, settings }: ScenePropsType) {
+function Scene({ scene, nextScene, settings, addSave }: ScenePropsType) {
   const [words, setWords] = useState(['']);
   const [isButtonsVisible, setButtonsVisible] = useState(false);
   const [textIndex, setTextIndex] = useState(0);
@@ -78,13 +79,18 @@ function Scene({ scene, nextScene, settings }: ScenePropsType) {
     return textIndex < texts.length - 1;
   };
 
+  const autoSave = useCallback(() => {
+    addSave({ time: Date.now(), name: 'AutoSave', id: scene.id, isAutoSave: true });
+  }, [scene.id, addSave]);
+
   useEffect(() => {
     lazyWords();
+    autoSave();
 
     return () => {
       clearWords();
     };
-  }, [lazyWords]);
+  }, [lazyWords, autoSave]);
 
   return (
     <div className={styles.background} style={{ backgroundImage: `url(${image})` }}>
@@ -119,4 +125,8 @@ const mapStateToProps = (state: { settings: SettingsState }) => {
   };
 };
 
-export default connect(mapStateToProps)(Scene);
+const mapDispatchToProps = {
+  addSave,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Scene);

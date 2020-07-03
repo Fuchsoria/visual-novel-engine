@@ -4,10 +4,9 @@ import { Saves } from '../../store/reducers/reducersTypes';
 import { addSave, removeSave, loadSave } from '../../store/actions/savesActions';
 import MenuButton from '../MenuButton';
 import { SceneType, MenuSavesProps } from '../../types/types';
-// import styles from './styles.module.scss';
+import styles from './styles.module.scss';
 
 function MenuSaves({ saves, scene, addSave, removeSave, loadSave }: MenuSavesProps) {
-  console.log(saves, scene.current?.id);
   const [menu, setMenu] = useState(false);
 
   const openMenu = () => {
@@ -19,18 +18,53 @@ function MenuSaves({ saves, scene, addSave, removeSave, loadSave }: MenuSavesPro
   };
 
   const save = () => {
-    console.log('save');
+    const saveName = prompt('Your save name', '');
+
+    addSave({ time: Date.now(), name: saveName || 'NoNameSave', id: scene.current.id });
   };
 
-  // const load = (id: string) => {};
+  const load = (id: string) => () => {
+    console.log('load', id);
+  };
+
+  const formatNumber = (number: number) => {
+    return number > 9 ? number : `0${number}`;
+  };
+
+  const formatDate = (time: number) => {
+    const date = new Date(time);
+
+    return `${formatNumber(date.getDay())}.${formatNumber(date.getMonth() + 1)}.${date.getFullYear()} ${formatNumber(
+      date.getHours()
+    )}:${formatNumber(date.getMinutes())}`;
+  };
 
   // const remove = (id: string) => {};
 
   if (menu) {
+    const userSaves = saves.filter((save) => !save.isAutoSave).reverse();
+    const autoSaves = saves.filter((save) => save.isAutoSave).reverse();
+
     return (
       <>
         <MenuButton handleClick={closeMenu} text="Close Saves" />
         {scene.current?.id && <MenuButton handleClick={save} text="Save" />}
+        <div className={styles.saves}>
+          {userSaves.map((save) => (
+            <MenuButton
+              key={`${save.time}${save.id}`}
+              handleClick={load(save.id)}
+              text={`Load ${save.name} (${formatDate(save.time)})`}
+            />
+          ))}
+          {autoSaves.map((save) => (
+            <MenuButton
+              key={`${save.time}${save.id}`}
+              handleClick={load(save.id)}
+              text={`Load AutoSave (${formatDate(save.time)})`}
+            />
+          ))}
+        </div>
       </>
     );
   } else {

@@ -31,6 +31,7 @@ export type Save = {
   time: number;
   id: string;
   name?: string;
+  isAutoSave?: boolean;
 };
 
 export type Saves = Save[];
