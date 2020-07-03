@@ -5,6 +5,7 @@ const novels: NovelType[] = [
     name: 'Demo Novel',
     scenes: {
       start: {
+        id: 'start',
         image:
           'https://images.unsplash.com/photo-1560972550-aba3456b5564?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjc5NjV9&auto=format&fit=crop&w=1350&q=80',
         texts: [
@@ -21,6 +22,7 @@ const novels: NovelType[] = [
         ],
       },
       scene1: {
+        id: 'scene1',
         image:
           'https://images.unsplash.com/photo-1519949387774-80d5c79b8a8c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
         texts: [
@@ -42,6 +44,7 @@ const novels: NovelType[] = [
         ],
       },
       scene2: {
+        id: 'scene2',
         image:
           'https://images.unsplash.com/photo-1542051841857-5f90071e7989?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
         texts: [
@@ -58,6 +61,7 @@ const novels: NovelType[] = [
         ],
       },
       final: {
+        id: 'final',
         image:
           'https://images.unsplash.com/photo-1528164344705-47542687000d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1369&q=80',
         texts: [{ text: 'Its final scene' }],

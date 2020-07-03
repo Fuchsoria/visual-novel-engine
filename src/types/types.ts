@@ -1,4 +1,4 @@
-import { SettingsState } from './../store/reducers/reducersTypes';
+import { SettingsState, Saves, Save } from './../store/reducers/reducersTypes';
 
 export type ButtonType = {
   text: string;
@@ -11,6 +11,7 @@ export type TextsType = {
 };
 
 export type SceneType = {
+  id: string;
   image: string;
   texts: TextsType[];
   buttons: ButtonType[];
@@ -60,4 +61,12 @@ export type MenuState = { settings: SettingsState; setLazyTexts: () => void; uns
 export type MenuButtonProps = {
   handleClick: () => void;
   text: string;
+};
+
+export type MenuSavesProps = {
+  saves: Saves;
+  scene: { current: SceneType };
+  addSave: (save: Save) => void;
+  removeSave: (id: string) => void;
+  loadSave: (id: string) => void;
 };

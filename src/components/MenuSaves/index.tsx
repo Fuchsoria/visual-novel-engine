@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Saves } from '../../store/reducers/reducersTypes';
-import { setLazyTexts, unsetLazyTexts } from '../../store/actions/settingsActions';
+import { addSave, removeSave, loadSave } from '../../store/actions/savesActions';
 import MenuButton from '../MenuButton';
+import { SceneType, MenuSavesProps } from '../../types/types';
 // import styles from './styles.module.scss';
 
-function MenuSaves({ saves }: { saves: Saves }) {
-  console.log(saves);
+function MenuSaves({ saves, scene, addSave, removeSave, loadSave }: MenuSavesProps) {
+  console.log(saves, scene.current?.id);
   const [menu, setMenu] = useState(false);
 
   const openMenu = () => {
@@ -17,10 +18,19 @@ function MenuSaves({ saves }: { saves: Saves }) {
     setMenu(false);
   };
 
+  const save = () => {
+    console.log('save');
+  };
+
+  // const load = (id: string) => {};
+
+  // const remove = (id: string) => {};
+
   if (menu) {
     return (
       <>
         <MenuButton handleClick={closeMenu} text="Close Saves" />
+        {scene.current?.id && <MenuButton handleClick={save} text="Save" />}
       </>
     );
   } else {
@@ -32,15 +42,17 @@ function MenuSaves({ saves }: { saves: Saves }) {
   }
 }
 
-const mapStateToProps = (state: { saves: Saves }) => {
+const mapStateToProps = (state: { saves: Saves; scene: { current: SceneType } }) => {
   return {
     saves: state.saves,
+    scene: state.scene,
   };
 };
 
 const mapDispatchToProps = {
-  setLazyTexts,
-  unsetLazyTexts,
+  addSave,
+  removeSave,
+  loadSave,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuSaves);
