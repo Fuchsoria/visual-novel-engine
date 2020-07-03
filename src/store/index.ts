@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage';
 import sceneReducer from './reducers/sceneReducer';
 import novelReducer from './reducers/novelReducer';
 import settingsReducer from './reducers/settingsReducer';
+import savesReducer from './reducers/savesReducer';
 
 declare global {
   interface Window {
@@ -16,11 +17,12 @@ const reducer = combineReducers({
   scene: sceneReducer,
   novel: novelReducer,
   settings: settingsReducer,
+  saves: savesReducer,
 });
 
 const persistConfig = {
   key: 'visual-novel',
-  whitelist: ['settings'],
+  whitelist: ['settings', 'saves'],
   storage,
 };
 

@@ -26,3 +26,23 @@ export type SettingsState = {
 };
 
 export type SettingsPayload = {};
+
+export type Save = {
+  time: number;
+  id: string;
+  name?: string;
+};
+
+export type Saves = Save[];
+
+export type LoadRemoveSavePayload = {
+  id: string;
+}
+
+export type LoadRemoveSaveState = {
+  id: string;
+}
+
+export type SavesPayload = Save;
+
+export type SavesState = Saves;
