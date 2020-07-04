@@ -123,7 +123,7 @@ function Scene({ scene, nextScene, settings, addSave }: ScenePropsType) {
               />
             ))}
         </div>
-        {texts[textIndex]?.nickname && <div className={styles.nickname}>{texts[textIndex]?.nickname}</div>}
+        {texts[textIndex]?.nickname && <div className={styles.nickname}>{texts[textIndex].nickname}</div>}
         {texts.length > 0 && (
           <SceneTexts
             isLeftArrowActive={isLeftArrowActive}
