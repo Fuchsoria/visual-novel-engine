@@ -16,6 +16,7 @@ function Scene({ scene, nextScene, settings, addSave }: ScenePropsType) {
   const [textIndex, setTextIndex] = useState(0);
   const [backgroundImage, setBackgroundImage] = useState('');
   const { image, texts, buttons } = scene;
+
   const handleClick = (id: string) => () => {
     clearScene();
     nextScene(id);
@@ -93,15 +94,21 @@ function Scene({ scene, nextScene, settings, addSave }: ScenePropsType) {
   }, [scene.id, addSave]);
 
   useEffect(() => {
-    lazyWords();
-    autoSave();
-    updateBackground();
+    setTextIndex(0);
+  }, [scene.id]);
+
+  useEffect(() => {
+    if (texts[textIndex]) {
+      lazyWords();
+      autoSave();
+      updateBackground();
+    }
 
     return () => {
       clearWords();
       setBackgroundImage('');
     };
-  }, [lazyWords, autoSave, updateBackground]);
+  }, [lazyWords, autoSave, updateBackground, texts, textIndex]);
 
   return (
     <div className={styles.background} style={{ backgroundImage: `url(${backgroundImage || image})` }}>
@@ -116,7 +123,7 @@ function Scene({ scene, nextScene, settings, addSave }: ScenePropsType) {
               />
             ))}
         </div>
-        {texts[textIndex].nickname && <div className={styles.nickname}>{texts[textIndex].nickname}</div>}
+        {texts[textIndex]?.nickname && <div className={styles.nickname}>{texts[textIndex]?.nickname}</div>}
         {texts.length > 0 && (
           <SceneTexts
             isLeftArrowActive={isLeftArrowActive}
