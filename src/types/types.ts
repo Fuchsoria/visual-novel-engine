@@ -8,6 +8,7 @@ export type ButtonType = {
 export type TextsType = {
   text: string;
   updatedImage?: string;
+  nickname?: string;
 };
 
 export type SceneType = {

@@ -14,6 +14,7 @@ function Scene({ scene, nextScene, settings, addSave }: ScenePropsType) {
   const [words, setWords] = useState(['']);
   const [isButtonsVisible, setButtonsVisible] = useState(false);
   const [textIndex, setTextIndex] = useState(0);
+  const [backgroundImage, setBackgroundImage] = useState('');
   const { image, texts, buttons } = scene;
   const handleClick = (id: string) => () => {
     clearScene();
@@ -56,6 +57,14 @@ function Scene({ scene, nextScene, settings, addSave }: ScenePropsType) {
     clearWords();
   };
 
+  const updateBackground = useCallback(() => {
+    const newBackground: string | undefined = texts[textIndex].updatedImage;
+
+    if (newBackground) {
+      setBackgroundImage(newBackground);
+    }
+  }, [textIndex, texts]);
+
   const prevText = () => {
     if (textIndex - 1 >= 0) {
       setTextIndex((textIndex) => (textIndex -= 1));
@@ -86,14 +95,16 @@ function Scene({ scene, nextScene, settings, addSave }: ScenePropsType) {
   useEffect(() => {
     lazyWords();
     autoSave();
+    updateBackground();
 
     return () => {
       clearWords();
+      setBackgroundImage('');
     };
-  }, [lazyWords, autoSave]);
+  }, [lazyWords, autoSave, updateBackground]);
 
   return (
-    <div className={styles.background} style={{ backgroundImage: `url(${image})` }}>
+    <div className={styles.background} style={{ backgroundImage: `url(${backgroundImage || image})` }}>
       <div className={styles.content}>
         <div className={styles.buttons}>
           {isButtonsVisible &&
@@ -105,6 +116,7 @@ function Scene({ scene, nextScene, settings, addSave }: ScenePropsType) {
               />
             ))}
         </div>
+        {texts[textIndex].nickname && <div className={styles.nickname}>{texts[textIndex].nickname}</div>}
         {texts.length > 0 && (
           <SceneTexts
             isLeftArrowActive={isLeftArrowActive}
