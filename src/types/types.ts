@@ -69,6 +69,7 @@ export type MenuSavesProps = {
   saves: Saves;
   scene: { current: SceneType };
   addSave: (save: Save) => void;
-  removeSave: (id: string) => void;
+  removeUserSave: (id: string) => void;
+  removeAutoSave: (id: string) => void;
   loadScene: (id: string) => void;
 };
