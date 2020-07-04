@@ -1,5 +1,5 @@
 import { createReducer } from 'typesafe-actions';
-import { addSave, removeUserSave, removeAutoSave } from './../actions/savesActions';
+import { addSave, removeSaveByTime } from './../actions/savesActions';
 import { Action, SavesState, SavesPayload } from './reducersTypes';
 
 const initialState: SavesState = [];
@@ -14,10 +14,7 @@ export default createReducer<SavesState>(initialState, {
       return [...state, action.payload];
     }
   },
-  [removeUserSave.toString()]: (state, action: Action<SavesPayload>) => {
-    return [...state.filter((save) => save.isAutoSave || (!save.isAutoSave && save.id !== action.payload.id))];
-  },
-  [removeAutoSave.toString()]: (state, action: Action<SavesPayload>) => {
-    return [...state.filter((save) => !save.isAutoSave || (save.isAutoSave && save.id !== action.payload.id))];
+  [removeSaveByTime.toString()]: (state, action: Action<SavesPayload>) => {
+    return [...state.filter((save) => save.time !== action.payload.time)];
   },
 });
