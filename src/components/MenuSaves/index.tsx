@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Saves } from '../../store/reducers/reducersTypes';
-import { addSave, removeSave, loadSave } from '../../store/actions/savesActions';
+import { addSave, removeSave } from '../../store/actions/savesActions';
 import MenuButton from '../MenuButton';
 import { SceneType, MenuSavesProps } from '../../types/types';
 import styles from './styles.module.scss';
 
-function MenuSaves({ saves, scene, addSave, removeSave, loadSave }: MenuSavesProps) {
+function MenuSaves({ saves, scene, addSave, removeSave, loadScene }: MenuSavesProps) {
   const [menu, setMenu] = useState(false);
 
   const openMenu = () => {
@@ -25,6 +25,7 @@ function MenuSaves({ saves, scene, addSave, removeSave, loadSave }: MenuSavesPro
 
   const load = (id: string) => () => {
     console.log('load', id);
+    loadScene(id);
   };
 
   const formatNumber = (number: number) => {
@@ -39,7 +40,13 @@ function MenuSaves({ saves, scene, addSave, removeSave, loadSave }: MenuSavesPro
     )}:${formatNumber(date.getMinutes())}`;
   };
 
-  // const remove = (id: string) => {};
+  const remove = (id: string) => () => {
+    const status = window.confirm('Do you want delete this save?');
+
+    if(status) {
+      console.log('remove', id);
+    }
+  };
 
   if (menu) {
     const userSaves = saves.filter((save) => !save.isAutoSave).reverse();
@@ -55,6 +62,7 @@ function MenuSaves({ saves, scene, addSave, removeSave, loadSave }: MenuSavesPro
               key={`${save.time}${save.id}`}
               handleClick={load(save.id)}
               text={`Load ${save.name} (${formatDate(save.time)})`}
+              handleRemove={remove(save.id)}
             />
           ))}
           {autoSaves.map((save) => (
@@ -62,6 +70,7 @@ function MenuSaves({ saves, scene, addSave, removeSave, loadSave }: MenuSavesPro
               key={`${save.time}${save.id}`}
               handleClick={load(save.id)}
               text={`Load AutoSave (${formatDate(save.time)})`}
+              handleRemove={remove(save.id)}
             />
           ))}
         </div>
@@ -86,7 +95,6 @@ const mapStateToProps = (state: { saves: Saves; scene: { current: SceneType } })
 const mapDispatchToProps = {
   addSave,
   removeSave,
-  loadSave,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuSaves);

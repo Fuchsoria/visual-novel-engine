@@ -62,6 +62,7 @@ export type MenuState = { settings: SettingsState; setLazyTexts: () => void; uns
 export type MenuButtonProps = {
   handleClick: () => void;
   text: string;
+  handleRemove?: () => void;
 };
 
 export type MenuSavesProps = {
@@ -69,5 +70,5 @@ export type MenuSavesProps = {
   scene: { current: SceneType };
   addSave: (save: Save) => void;
   removeSave: (id: string) => void;
-  loadSave: (id: string) => void;
+  loadScene: (id: string) => void;
 };

@@ -24,7 +24,7 @@ class Novel extends Component<NovelProps> {
       <>
         <div className={styles.menu}>
           <MenuSettings />
-          <MenuSaves />
+          <MenuSaves loadScene={this.nextScene}/>
         </div>
         {scene && <Scene scene={scene} nextScene={this.nextScene} />}
       </>
