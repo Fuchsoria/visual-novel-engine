@@ -4,13 +4,15 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Router from './router';
 import { initStore } from './store';
 import { setNovel } from './store/actions/novelActions';
-import novels from './mocks/testNovel';
+import novelData from './mocks/novel.json';
+import { NovelType } from './types/types';
 
 const { store, persistor } = initStore();
-const demoNovel = novels.find(({ id }) => id === 'demo');
+const novel: NovelType = novelData;
 
-if (demoNovel) {
-  store.dispatch(setNovel(demoNovel));
+if (novel) {
+  console.log(novelData);
+  store.dispatch(setNovel(novel));
 }
 
 export default function App() {

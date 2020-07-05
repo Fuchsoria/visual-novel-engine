@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;700&display=swap');
 
 body {
+  max-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   margin: 0;
   font-family: 'Comic Neue', cursive;
   -webkit-font-smoothing: antialiased;
