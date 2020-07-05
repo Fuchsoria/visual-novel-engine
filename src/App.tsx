@@ -11,8 +11,9 @@ const { store, persistor } = initStore();
 const novel: NovelType = novelData;
 
 if (novel) {
-  console.log(novelData);
   store.dispatch(setNovel(novel));
+  
+  document.title = novel.name;
 }
 
 export default function App() {
